@@ -12,7 +12,7 @@ namespace ServerUpdateTool
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Updater for Unturned 3.0 servers.");
+            Console.WriteLine("Updater & Installer for Unturned 3.0 servers.");
             Console.WriteLine("");
             if (args.Length == 1)
             {
