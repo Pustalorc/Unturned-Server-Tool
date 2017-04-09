@@ -14,8 +14,6 @@ namespace ServerUpdateTool
         {
             Console.WriteLine("Updater for Unturned 3.0 servers.");
             Console.WriteLine("");
-            Console.WriteLine("Waiting 60 seconds for any other servers to shutdown.");
-            Thread.Sleep(60000);
             if (args.Length == 1)
             {
                 if (args[0].ToLower() == "-r")
@@ -171,28 +169,41 @@ namespace ServerUpdateTool
             Console.WriteLine("Latest version of rocket installed!");
         }
 
-        static void StartServer(string FileWithInstances)
+        static void StartServer(string Instance)
         {
             Console.WriteLine("Starting server...");
-            foreach (string s in File.ReadAllLines(FileWithInstances))
-            {
-                Process Game = new Process();
-                ProcessStartInfo startInfo = new ProcessStartInfo();
-                startInfo.FileName = Path.GetFullPath(Directory.GetCurrentDirectory() + "\\Unturned.exe");
-                startInfo.Arguments = " -batchmode -nographics +secureserver/" + s;
-                Game.StartInfo = startInfo;
-                Game.Start();
-                Console.WriteLine("Server with instance name " + s + " successfully started.");
-            }
-            File.Delete(FileWithInstances);
+            Process Game = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = Path.GetFullPath(Directory.GetCurrentDirectory() + "\\Unturned.exe");
+            startInfo.Arguments = " -batchmode -nographics +secureserver/" + Instance;
+            Game.StartInfo = startInfo;
+            Game.Start();
+            Console.WriteLine("Server with instance name " + Instance + " successfully started.");
         }
 
         private static void ShowHelp()
         {
-            Console.WriteLine("Required Arguments (And in their order):");
-            Console.WriteLine("-R         Updates Rocket.");
-            Console.WriteLine("-U         Updates Unturned.");
-            Console.WriteLine("-I         Specifies The Instance Name Of The Server");
+            Console.WriteLine("Valid Arguments:");
+            Console.WriteLine("-R         Updates or Installs Rocket.");
+            Console.WriteLine("-U         Updates or Installs Unturned.");
+            Console.WriteLine("-I         Specifies The Instance Name Of The Server To Start Up");
+            Console.WriteLine("");
+            Console.WriteLine("Examples:");
+            Console.WriteLine("ServerUpdateTool.exe -R");
+            Console.WriteLine("ServerUpdateTool.exe -U");
+            Console.WriteLine("ServerUpdateTool.exe -R -U");
+            Console.WriteLine("ServerUpdateTool.exe -U -R");
+            Console.WriteLine("ServerUpdateTool.exe -I MyServer");
+            Console.WriteLine("ServerUpdateTool.exe -R -I MyServer");
+            Console.WriteLine("ServerUpdateTool.exe -I MyServer -R");
+            Console.WriteLine("ServerUpdateTool.exe -U -I MyServer");
+            Console.WriteLine("ServerUpdateTool.exe -I MyServer -U");
+            Console.WriteLine("ServerUpdateTool.exe -U -R -I MyServer");
+            Console.WriteLine("ServerUpdateTool.exe -R -U -I MyServer");
+            Console.WriteLine("ServerUpdateTool.exe -U -I MyServer -R");
+            Console.WriteLine("ServerUpdateTool.exe -R -I MyServer -U");
+            Console.WriteLine("ServerUpdateTool.exe -I MyServer -R -U");
+            Console.WriteLine("ServerUpdateTool.exe -I MyServer -U -R");
         }
     }
 }
